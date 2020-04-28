@@ -1,6 +1,8 @@
 This is a simple wireguard VPN user management script using on VPN server.
 Client config file and qrcode are generated.
 
+forked from faicker/wg-config
+
 ### dependency
 
 * wireguard
@@ -16,8 +18,7 @@ You can generate the public key and private key with command `wg genkey | tee pr
 
 ### usage
 
-Running as root. (mandatory)
-This script creates the "users" directory where youd cloned this repo.
+Running as root (mandatory). For security reasons use `sudo -i` to become root and store all this under root's home. This script creates the "users" directory where you cloned this repo.
 
 #### init wireguard server
 
@@ -54,3 +55,5 @@ This will delete the alice directory and delete alice from the wg server config.
 ./wg-config.sh -c
 ```
 Delete all users before clear.
+
+Best Regards!
