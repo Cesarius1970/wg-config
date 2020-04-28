@@ -2,4 +2,6 @@
 Address = $_SERVER_IP
 ListenPort = $_SERVER_PORT
 PrivateKey = $_SERVER_PRIVATE_KEY
-Table = off
+PostUp   = iptables -A FORWARD -i $_INTERFACE -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE; ip6tables -A FORWARD -i $_INTERFACE -j ACCEPT; ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i $_INTERFACE -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE; ip6tables -D FORWARD -i $_INTERFACE -j ACCEPT; ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+SaveConfig = true
