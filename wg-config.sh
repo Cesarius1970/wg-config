@@ -6,10 +6,11 @@ cd "$(dirname "${BASH_SOURCE[0]}")" || exit
 . wg-config.def
 CLIENT_TPL_FILE=client.conf.tpl
 SERVER_TPL_FILE=server.conf.tpl
-SAVED_FILE=.saved
-AVAILABLE_IP_FILE=.available_ip
 WG_TMP_CONF_FILE=.$_INTERFACE.conf
-WG_CONF_FILE="/etc/wireguard/$_INTERFACE.conf"
+WG_CONF_FILE="$_DEFAULT_DIR/$_INTERFACE.conf"
+USERS_DIR=$_DEFAULT_DIR/users
+SAVED_FILE=$USERS_DIR/.saved
+AVAILABLE_IP_FILE="$USERS_DIR/.available_ip"
 
 dec2ip() {
     local delim=''
@@ -59,7 +60,7 @@ add_user() {
     local user=$1
     local template_file=${CLIENT_TPL_FILE}
     local interface=${_INTERFACE}
-    local userdir="users/$user"
+    local userdir="$USERS_DIR/$user"
 
     mkdir -p "$userdir"
     wg genkey | tee $userdir/privatekey | wg pubkey >$userdir/publickey
@@ -92,7 +93,7 @@ add_user() {
 
 del_user() {
     local user=$1
-    local userdir="users/$user"
+    local userdir="$USERS_DIR/$user"
     local ip key
     local interface=${_INTERFACE}
 
@@ -190,6 +191,8 @@ if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root"
     exit 1
 fi
+
+mkdir -p $USERS_DIR
 
 action=$1
 user=$2
