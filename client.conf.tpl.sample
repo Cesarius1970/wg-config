@@ -5,6 +5,6 @@ DNS = $_SERVER_DNS
 
 [Peer]
 PublicKey = $_SERVER_PUBLIC_KEY
-AllowedIPs = $_SERVER_IP
+AllowedIPs = $_SERVER_IP, $_SERVER_DNS/24
 Endpoint = $_SERVER_LISTEN
 PersistentKeepalive = 55
